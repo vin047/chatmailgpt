@@ -1,3 +1,5 @@
+import 'package:chatmailgpt/src/features/chats/data/local/fake_local_chat_repository.dart';
+import 'package:chatmailgpt/src/features/chats/data/local/local_chat_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -17,8 +19,13 @@ void main() async {
   // more info here: https://docs.google.com/document/d/1VCuB85D5kYxPR3qYOjVmw8boAGKb7k62heFyfFHTOvw/edit
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
+  final fakeLocalChatRepository = FakeLocalChatRepository();
+
   runApp(
     ProviderScope(
+      overrides: [
+        localChatRepositoryProvider.overrideWithValue(fakeLocalChatRepository),
+      ],
       child: const MyApp(),
     ),
   );
